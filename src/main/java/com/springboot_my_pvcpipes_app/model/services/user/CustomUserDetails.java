@@ -27,7 +27,11 @@ public class CustomUserDetails implements UserDetails {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public Long getId() {
+		return user.getId();
+	}
+	
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
