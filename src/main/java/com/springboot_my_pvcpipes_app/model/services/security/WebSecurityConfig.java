@@ -20,7 +20,9 @@ import com.springboot_my_pvcpipes_app.model.services.user.CustomUserDetailsServi
 
 /**
  * @author Dcruz
- *
+ * Configure Spring Security for Authentication (Login)
+ * Listed pages that require authentication.
+ * Implementation of PasswordEncoder that uses the BCrypt strong hashing function
  */
 @Configuration
 @EnableWebSecurity
@@ -55,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/users", "/login_success", "/update/{id}", "/edit/{id}").authenticated()
+            .antMatchers("/users", "/login_success", "/update/{id}", "/edit/{id}", "/user/{id}").authenticated()
             .anyRequest().permitAll()
             .and()
             .formLogin()

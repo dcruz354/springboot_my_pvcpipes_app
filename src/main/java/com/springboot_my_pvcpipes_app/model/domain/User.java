@@ -12,7 +12,9 @@ import javax.persistence.Table;
 
 /**
  * @author Dcruz
- *
+ * Entity Class
+ * Use to map with the corresponding `users` table
+ * in the database.
  */
 @Entity
 @Table(name= "users")

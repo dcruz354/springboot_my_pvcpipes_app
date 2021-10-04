@@ -13,7 +13,8 @@ import com.springboot_my_pvcpipes_app.model.domain.User;
 
 /**
  * @author Dcruz
- *
+ * Class that loads user-specific data. 
+ * Support for new data-access strategies.
  */
 public class CustomUserDetailsService implements UserDetailsService {
 	
@@ -22,7 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		User user = userRepo.findByEmail(username);
 		if(user == null) {
 			throw new UsernameNotFoundException("User not found");

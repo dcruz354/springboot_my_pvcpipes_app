@@ -8,8 +8,14 @@
 <body>
     <div class="container text-center">
         <h3>You have signed in successfully!</h3>
-        <h4><a th:href="@{'/edit/' + ${#request.userPrincipal.principal.id}}">Click here to Update User Information</a></td></h4>
+        <h4><a th:href="@{'/edit/' + ${#request.userPrincipal.principal.id}}">Click here to Update User Information</a></h4>
+        <h4><a th:href="@{'/user/' + ${#request.userPrincipal.principal.id}}">Click here to Show User Information</a></h4>
+         <div>
+	        <form th:action="@{/logout}" method="post">
+	
+	            <input type="submit" value="Sign Out" />
+	        </form>
+   		 </div>
     </div>
-     
 </body>
 </html>
