@@ -3,12 +3,10 @@
  */
 package com.springboot_my_pvcpipes_app.model.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.*;
 
 /**
  * @author Dcruz
@@ -35,9 +33,40 @@ public class User {
 
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+ 
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+    
+    
+
+    /**
+	 * @return the roles
+	 */
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
 
-    public Long getId() {
+
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+
+
+	public Long getId() {
         return this.id;
     }
 

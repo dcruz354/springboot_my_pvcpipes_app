@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.springboot_my_pvcpipes_app.model.dao.IUserRepository;
+import com.springboot_my_pvcpipes_app.model.domain.Role;
 import com.springboot_my_pvcpipes_app.model.domain.User;
+import com.springboot_my_pvcpipes_app.model.services.user.UserService;
 
 /**
  * @author Dcruz
@@ -28,7 +30,7 @@ import com.springboot_my_pvcpipes_app.model.domain.User;
 public class AppController {
 	
 	@Autowired
-	private IUserRepository userRepo;
+	private UserService service;
 	
 	// mapping HTTP GET requests onto specific handler methods
 	@GetMapping("")
@@ -48,20 +50,14 @@ public class AppController {
 	
 	@PostMapping("/process_register")
 	public String processRegister(User user) {
-		// Implementation of PasswordEncoder that uses the BCrypt strong hashing function
-	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	    String encodedPassword = passwordEncoder.encode(user.getPassword());
-	    user.setPassword(encodedPassword);
-	     
-	    userRepo.save(user);
-	     
+		service.registerDefaultUser(user);
 	    return "register_success";
 	}
 	
 	// mapping HTTP GET requests onto specific handler methods
 	@GetMapping("/users")
 	public String listUsers(Model model) {
-	    List<User> listUsers = userRepo.findAll();
+	    List<User> listUsers = service.listAll();
 	    model.addAttribute("listUsers", listUsers);
 	     
 	    return "users";
@@ -69,29 +65,20 @@ public class AppController {
 	
 	// mapping HTTP GET requests onto specific handler methods
 	@GetMapping("/edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-	    User user = userRepo.findById(id)
-	    	      .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+	public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+	    User user = service.get(id);
+	    List<Role> listRoles = service.getRoles();
 		
 		model.addAttribute("user", user);
+		model.addAttribute("listRoles", listRoles);
 		
 		return "update_form";
 	}
 	
 	// mapping HTTP POST requests onto specific handler methods
-	@PostMapping("/update/{id}")
-	public String updateUser(@PathVariable("id") long id, @Valid User user, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			user.setId(id);
-			return "update_form";
-		}
-		
-		// Implementation of PasswordEncoder that uses the BCrypt strong hashing function
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	    String encodedPassword = passwordEncoder.encode(user.getPassword());
-	    user.setPassword(encodedPassword);
-		
-		userRepo.save(user);
+	@PostMapping("/update/save")
+	public String updateUser(@Valid User user, BindingResult result, Model model) {
+		service.save(user);
 		return "update_success";
 	}
 	
@@ -104,8 +91,7 @@ public class AppController {
 	// mapping HTTP GET requests onto specific handler methods
 	@GetMapping("/user/{id}")
 	public String listUserInformation(@PathVariable("id") long id, Model model) {
-		User user = userRepo.findById(id)
-	    	      .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		User user = service.get(id);
 		
 		model.addAttribute("user", user);
 	     
