@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="ISO-8859-1">
     <title>Login Success</title>
@@ -10,6 +11,9 @@
         <h3>You have signed in successfully!</h3>
         <h4><a th:href="@{'/edit/' + ${#request.userPrincipal.principal.id}}">Click here to Update User Information</a></h4>
         <h4><a th:href="@{'/user/' + ${#request.userPrincipal.principal.id}}">Click here to Show User Information</a></h4>
+        <div sec:authorize="hasAnyAuthority('Admin')">
+		    <h4><a th:href="@{/users}">List of Users</a></h4>
+		</div>
          <div>
 	        <form th:action="@{/logout}" method="post">
 	

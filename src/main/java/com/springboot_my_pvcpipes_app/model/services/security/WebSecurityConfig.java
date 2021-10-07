@@ -27,9 +27,6 @@ import com.springboot_my_pvcpipes_app.model.services.user.CustomUserDetailsServi
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private DataSource dataSource;
-     
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
@@ -57,14 +54,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/users", "/login_success", "/update/{id}", "/edit/{id}", "/user/{id}").authenticated()
-            .anyRequest().permitAll()
-            .and()
-            .formLogin()
-                .usernameParameter("email")
-                .defaultSuccessUrl("/login_success")
-                .permitAll()
-            .and()
-            .logout().logoutSuccessUrl("/").permitAll();
+        .antMatchers("/css/**", "/js/**", "/webjars/**").permitAll()
+        .antMatchers("/", "/register").permitAll()
+        .antMatchers("/login_success", "/update/{id}", "/edit/{id}", "/user/{id}").hasAnyAuthority("User", "Admin", "Customer")
+        .antMatchers("/users").hasAnyAuthority("Admin")
+        .anyRequest().authenticated()
+        .and()
+        .formLogin()
+            .usernameParameter("email")
+            .defaultSuccessUrl("/login_success")
+            .permitAll()
+        .and()
+        .logout().logoutSuccessUrl("/").permitAll()
+        .and()
+        .exceptionHandling().accessDeniedPage("/403");
     }
 }

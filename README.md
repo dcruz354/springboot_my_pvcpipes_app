@@ -13,3 +13,4 @@
 ## The following tutorials were used to help create this Spring Boot Project: <br>
 \* https://www.codejava.net/frameworks/spring-boot/user-registration-and-login-tutorial <br>
 \* https://www.baeldung.com/spring-boot-add-filter
+\* https://www.codejava.net/frameworks/spring-boot/spring-security-add-roles-to-user-examples

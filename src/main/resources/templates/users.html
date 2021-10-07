@@ -10,15 +10,11 @@
 <body>
 <div class="container text-center">
     <div>
-        <form th:action="@{/logout}" method="post">
-            <p>
+                <p>
                 Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
-                Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
                 <br>
-                Welcome <b>[[${#request.userPrincipal.principal.id}]]</b>
             </p>
-            <input type="submit" value="Sign Out" />
-        </form>
+
     </div>
     <div>
         <h1>List of Users</h1>
@@ -43,11 +39,17 @@
                     <td th:text="${user.firstName}">First Name</td>
                     <td th:text="${user.lastName}">Last Name</td>
                     <td th:text="${user.roles}">Roles</td>
+                    <td></td>
                     <td><a th:href="@{'/edit/' + ${user.id}}">Edit</a></td>
                 </tr>
             </tbody>
         </table>
     </div>
+    
+            <form th:action="@{/logout}" method="post">
+
+            <input type="submit" value="Sign Out" />
+        </form>
 </div>
 </body>
 </html>
