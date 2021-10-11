@@ -3,25 +3,24 @@
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Update Success</title>
+    <title>Home</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
     <div class="container text-center">
-        <h3>You have updated information successfully!</h3>
-        <br>
+        <h3>Please select an option:</h3>
         <h4><a th:href="@{'/edit/' + ${#request.userPrincipal.principal.id}}">Click here to Update User Information</a></h4>
         <h4><a th:href="@{'/user/' + ${#request.userPrincipal.principal.id}}">Click here to Show User Information</a></h4>
         <div sec:authorize="hasAnyAuthority('Admin')">
 		    <h4><a th:href="@{/users}">List of Users</a></h4>
 		</div>
 		<h4><a th:href="@{/home}">Home</a></h4>
-        <div>
+         <div>
 	        <form th:action="@{/logout}" method="post">
 	
 	            <input type="submit" value="Sign Out" />
 	        </form>
-   	 </div>
-    </div> 
+   		 </div>
+    </div>
 </body>
 </html>

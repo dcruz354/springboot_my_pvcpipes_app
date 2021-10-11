@@ -45,11 +45,13 @@
             </tbody>
         </table>
     </div>
-    
-            <form th:action="@{/logout}" method="post">
-
-            <input type="submit" value="Sign Out" />
-        </form>
+		<h4><a th:href="@{/home}">Home</a></h4>
+         <div>
+	        <form th:action="@{/logout}" method="post">
+	
+	            <input type="submit" value="Sign Out" />
+	        </form>
+   		 </div>
 </div>
 </body>
 </html>

@@ -103,4 +103,8 @@ public class AppController {
 		return "403";
 	}
 	
+	@GetMapping("/home")public String showHome(Model model) {
+		return "home";
+	}
+	
 }
