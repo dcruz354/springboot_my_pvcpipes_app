@@ -40,14 +40,29 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    
     private Set<Role> roles = new HashSet<>();
- 
+    
     public void addRole(Role role) {
         this.roles.add(role);
     }
     
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_items",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    ) 
+    private Set<Item> items = new HashSet<>();
     
-
+    public void addItem(Item item) {
+    	this.items.add(item);
+    }
+    
+    public Set<Item> getItems() {
+    	return items;
+    }
+    
     /**
 	 * @return the roles
 	 */
@@ -105,6 +120,12 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", roles=" + roles + ", items=" + items + "]";
+	}
 
     
 }

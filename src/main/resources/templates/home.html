@@ -11,8 +11,11 @@
         <h3>Please select an option:</h3>
         <h4><a th:href="@{'/edit/' + ${#request.userPrincipal.principal.id}}">Click here to Update User Information</a></h4>
         <h4><a th:href="@{'/user/' + ${#request.userPrincipal.principal.id}}">Click here to Show User Information</a></h4>
+        <h4><a th:href="@{'/items/' + ${#request.userPrincipal.principal.id}}">Click here to Show List of Items</a></h4>
+        <h4><a th:href="@{'/newItem/' + ${#request.userPrincipal.principal.id}}">Click here to Add An Item</a></h4>
         <div sec:authorize="hasAnyAuthority('Admin')">
 		    <h4><a th:href="@{/users}">List of Users</a></h4>
+		    <h4><a th:href="@{/allItems}">Click here to Show List of All Items</a></h4>
 		</div>
 		<h4><a th:href="@{/home}">Home</a></h4>
          <div>

@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
+import com.springboot_my_pvcpipes_app.model.domain.Item;
 import com.springboot_my_pvcpipes_app.model.domain.Role;
 import com.springboot_my_pvcpipes_app.model.domain.User;
 
@@ -34,6 +35,9 @@ class UserRepositoryTests {
     
     @Autowired 
     private IRoleRepository repoRole;
+    
+    @Autowired
+    private IItemRepository repoItem;
     
     
     @Test
@@ -89,6 +93,20 @@ class UserRepositoryTests {
         User savedUser = repoUser.save(user);
          
         assertThat(savedUser.getRoles().size()).isEqualTo(2);      
+    }
+    
+    @Test
+    public void testAddItemToExistingUser() {
+        User user = repoUser.findById(1L).get();
+        Item itemUser = repoItem.findByName("Item One");
+       // Role roleCustomer = new Role(3);
+         
+        user.addItem(itemUser);
+        //user.addRole(roleCustomer);
+         
+        User savedUser = repoUser.save(user);
+         
+        assertThat(savedUser.getItems().size()).isEqualTo(1);      
     }
 
 }
